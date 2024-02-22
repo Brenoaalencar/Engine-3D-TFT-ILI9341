@@ -3,7 +3,9 @@ Engine gráfica para exibição de objetos 3D em um display ILI9341 2.4" usando 
 
 Agora que já vimos técnicas para animações em 2D, adicionaremos a terceira dimensão em nossas animações. 
 
-//Adicionar aqui filmagem do cubo girando 
+<div align="center">
+<img src ="https://github.com/Brenoaalencar/DAC_R2R_8bits/assets/72100554/0d7df9f6-69b6-436a-a22a-1febbf2ff41c.gif" width="400px"/>
+</div>
 
 A chave para entendermos como transformarmos elementos tridimensionais em bidimensionais está na projeção de perspectiva, pois, na ilusão criada para comportar a terceira dimensão, tudo deve ser projetado para o plano do anteparo visual, a tela, de acordo com a perspectiva do observador.
 
@@ -121,7 +123,9 @@ void MultiplyMatrixxVector(const vec3d &i, vec3d &o,const mat4x4 &m) {
 
 Seguindo para o método ```OnUserCreate```, criaremos os triângulos do cubo seguindo uma lógica para os pontos.
 
-//Desenhar triângulos no cubo com os pontos para explicação
+<div align="center">
+<img src ="https://github.com/Brenoaalencar/DAC_R2R_8bits/assets/72100554/e5c051b1-cd89-4983-8516-0cc1ac2693e8.png" width="450px"/>
+</div>
 
   Como possuímos dois triângulos por face, precisaremos criar doze triângulos e adicioná-los no vetor tris da malha meshCube criada, sempre em ordem horária. Então criaremos triângulos auxiliares e o inseriremos na malha por meio do ```push_back()```. Existem formas mais otimizadas de inserir no vetor esses pontos, porém o compilador do Keil Studio não permitiu adicionar sem criar esses triângulos auxiliares. 
 
@@ -257,11 +261,8 @@ bool OnUserCreate() {
 ```
 
 Agora que possuímos a malha criada e a matriz de projeção definida, precisamos do método que atualiza a posição dos vértices conforme a rotação, translação e projeção e desenha os triângulos ao fim do processo.
-
 Em nosso exemplo, utilizaremos rotações em X e em Z, então criamos as matrizes de rotação no espaço e o ângulo theta de rotação.
-
-//Explicação sobre a matriz de rotação e transformações homogêneas
-A matriz de rotação é responsável por girar os pontos em torno de algum eixo estabelecido. Sem translações do objeto, podemos realizar o seguinte produto matricial.
+A matriz de rotação é responsável por girar os pontos em torno de algum eixo estabelecido. Sem translações do objeto, podemos realizar o seguinte produto matricial. Se houver translação, os pontos deverão passar por uma transformação homogênea que realize a essa translação.
 
 ```C++
 // Set up rotation matrices
@@ -289,7 +290,7 @@ A matriz de rotação é responsável por girar os pontos em torno de algum eixo
 Em seguida temos o loop for para desenho dos triângulos da malha do cubo. Em cada iteração do loop, acessa-se um triângulo no vetor ```meshCube.tris``` por meio de um iterador usando uma referência constante ```tri``` para trabalhar com esse triângulo dentro no loop.
 Em seguida são criados elementos do tipo ```triangle``` para projeção, translação e rotações. Logo em seguida são aplicadas as rotações em Z e X, o offset para a tela e uma projeção dos triângulos do 3D para o 2D. 
 Por fim, os triângulos são escalados e desenhados na tela.
-Para reduzir as 'piscadas' da tela, repetimos o mesmo for, mas agora instruímos que os triângulos sejam pintados (após um pequeno delay) com a cor do fundo, dando a ilusão de continuidade na animação, assim como nas animações em 2D que fizemos.
+Para reduzir as 'piscadas' (flickering) da tela, repetimos o mesmo for, mas agora instruímos que os triângulos sejam pintados (após um pequeno delay) com a cor do fundo, dando a ilusão de continuidade na animação, assim como nas animações em 2D que fizemos.
 Para melhores resultados, busque implementar a técnica de double buffering. 
 
 ```C++
@@ -500,6 +501,17 @@ fElapsedTime += 0.1;
 ```
 
 Esse programa é a base para aplicações mais sofisticadas de uma engine gráfica simples. Essa malha cúbica pode ser expandida para uma extensa variedade de formas. Com ajuda de softwares de modelagem 3D, como Blender, você pode criar ou importar os pontos, com algumas modificações nesse código, de modelos tridimensionais mais complexos. Ele também pode ser enriquecido com iluminação, adição de câmera e texturas e muito mais.  
+
+Referências:
+Sobre as transformações homogêneas:
+https://slideplayer.com.br/slide/358122/
+
+Extremamente recomendado conferir:
+https://www.youtube.com/watch?v=ih20l3pJoeU&list=PLrOv9FMX8xJE8NgepZR1etrsU63fDDGxO&index=25&ab_channel=javidx
+
+Slides de suporte:
+https://slideplayer.com.br/amp/358089/
+
 
 
 
